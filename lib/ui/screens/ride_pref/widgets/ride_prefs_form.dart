@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:week_3_blabla_project/ui/screens/date_picker/date_picker_screen.dart';
 import 'package:week_3_blabla_project/ui/screens/location_picker/location_picker_screen.dart';
 import 'package:week_3_blabla_project/ui/screens/ride_pref/widgets/bla_button.dart';
 import 'package:week_3_blabla_project/ui/screens/ride_pref/widgets/form_tile.dart';
@@ -79,7 +80,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
       arrival = temp;
     });
   }
-Future<void> onSelectSeats() async {
+
+  Future<void> onSelectSeats() async {
     final selectedSeats = await Navigator.push(
       context,
       AnimationUtils.createBottomToTopRoute(
@@ -93,7 +95,20 @@ Future<void> onSelectSeats() async {
     }
   }
 
-  
+  Future<void> onSelectDate() async {
+    final selectedDate = await Navigator.push(
+      context,
+      AnimationUtils.createBottomToTopRoute(
+        DatePickerScreen(initialDate: departureDate),
+      ),
+    );
+    if (selectedDate != null) {
+      setState(() {
+        departureDate = selectedDate;
+      });
+    }
+  }
+
   void onSearchPressed() {
     if (isSearchValid) {
       final ridePref = RidePref(
@@ -167,9 +182,7 @@ Future<void> onSelectSeats() async {
           FormTile(
             customIcon: Icons.date_range,
             value: dateText,
-            onTap: () {
-              // TODO: Implement date picker
-            },
+            onTap: onSelectDate,
           ),
           BlaDivider(),
 

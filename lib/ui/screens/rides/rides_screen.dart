@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../../model/ride/ride.dart';
 import '../../../model/ride_pref/ride_pref.dart';
 import '../../../services/rides_service.dart';
@@ -100,6 +101,23 @@ class _RidesScreenState extends State<RidesScreen> {
                     const SizedBox(width: 8),
                     Text(
                       widget.ridePref.arrival?.name ?? 'Any',
+                      style: BlaTextStyles.label.copyWith(
+                        color: BlaColors.textNormal,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.date_range,
+                      size: 16,
+                      color: BlaColors.iconLight,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      DateFormat('EEEE, MMMM d').format(widget.ridePref.departureDate),
                       style: BlaTextStyles.label.copyWith(
                         color: BlaColors.textNormal,
                       ),
