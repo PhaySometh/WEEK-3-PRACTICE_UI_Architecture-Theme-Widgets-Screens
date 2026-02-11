@@ -4,6 +4,7 @@ import 'package:week_3_blabla_project/ui/screens/location_picker/location_picker
 import 'package:week_3_blabla_project/ui/screens/ride_pref/widgets/bla_button.dart';
 import 'package:week_3_blabla_project/ui/screens/ride_pref/widgets/form_tile.dart';
 import 'package:week_3_blabla_project/ui/screens/rides/rides_screen.dart';
+import 'package:week_3_blabla_project/ui/screens/seat_spinner/seat_spinner_screen.dart';
 import 'package:week_3_blabla_project/ui/widgets/display/bla_divider.dart';
 import 'package:week_3_blabla_project/ui/theme/theme.dart';
 import 'package:week_3_blabla_project/utils/animations_util.dart';
@@ -78,7 +79,21 @@ class _RidePrefFormState extends State<RidePrefForm> {
       arrival = temp;
     });
   }
+Future<void> onSelectSeats() async {
+    final selectedSeats = await Navigator.push(
+      context,
+      AnimationUtils.createBottomToTopRoute(
+        SeatSpinnerScreen(initialSeats: requestedSeats),
+      ),
+    );
+    if (selectedSeats != null) {
+      setState(() {
+        requestedSeats = selectedSeats;
+      });
+    }
+  }
 
+  
   void onSearchPressed() {
     if (isSearchValid) {
       final ridePref = RidePref(
@@ -87,7 +102,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
         departureDate: departureDate,
         requestedSeats: requestedSeats,
       );
-      
+
       // Navigate to RidesScreen with the ride preferences
       Navigator.push(
         context,
@@ -95,7 +110,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
           RidesScreen(ridePref: ridePref),
         ),
       );
-      
+
       // Call the callback if provided
       if (widget.onSearchPressed != null) {
         widget.onSearchPressed!(ridePref);
@@ -162,9 +177,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
           FormTile(
             customIcon: Icons.people,
             value: seatsText,
-            onTap: () {
-              // TODO: Implement seat picker
-            },
+            onTap: onSelectSeats,
           ),
 
           SizedBox(height: BlaSpacings.m),
