@@ -7,7 +7,7 @@ import '../model/ride/ride.dart';
 ///   - The list of available rides
 ///
 class RidesService {
-  static List<Ride> allRides = fakeRides;
+  static List<Ride> allRides = fakeRides; // TODO for now fake data
 
   static List<Ride> filterByDeparture(Location departure) {
     return allRides

@@ -1,6 +1,6 @@
-import 'package:blablacar/model/ride/locations.dart';
-import 'package:blablacar/services/rides_service.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:week_3_blabla_project/model/ride/locations.dart';
+import 'package:week_3_blabla_project/services/rides_service.dart';
 
 void main() {
   test('test the filter method', () {
