@@ -5,6 +5,7 @@ import 'package:week_3_blabla_project/ui/screens/ride_pref/widgets/bla_button.da
 import 'package:week_3_blabla_project/ui/screens/ride_pref/widgets/form_tile.dart';
 import 'package:week_3_blabla_project/ui/widgets/display/bla_divider.dart';
 import 'package:week_3_blabla_project/ui/theme/theme.dart';
+import 'package:week_3_blabla_project/utils/animations_util.dart';
 
 import '../../../../model/ride/locations.dart';
 import '../../../../model/ride_pref/ride_pref.dart';
@@ -52,26 +53,19 @@ class _RidePrefFormState extends State<RidePrefForm> {
   // Handle events
   // ----------------------------------
 
-  void onSelectedDeparture() async {
+  // Consolidated location selection function
+  Future<void> onSelectLocation(bool isDeparture) async {
     final selectedLocation = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LocationPickerScreen()),
+      AnimationUtils.createBottomToTopRoute(LocationPickerScreen()),
     );
     if (selectedLocation != null) {
       setState(() {
-        departure = selectedLocation;
-      });
-    }
-  }
-
-  void onSelectedArrival() async {
-    final selectedLocation = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => LocationPickerScreen()),
-    );
-    if (selectedLocation != null) {
-      setState(() {
-        arrival = selectedLocation;
+        if (isDeparture) {
+          departure = selectedLocation;
+        } else {
+          arrival = selectedLocation;
+        }
       });
     }
   }
@@ -123,7 +117,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
             customIcon: Icons.trip_origin,
             value: departure?.name,
             hintText: "Leaving from",
-            onTap: onSelectedDeparture,
+            onTap: () => onSelectLocation(true),
             trailing: departure != null
                 ? IconButton(
                     icon: Icon(Icons.swap_vert, color: BlaColors.primary),
@@ -136,10 +130,10 @@ class _RidePrefFormState extends State<RidePrefForm> {
 
           // Arrival
           FormTile(
-            customIcon: Icons.trip_origin,
+            customIcon: Icons.location_on,
             value: arrival?.name,
             hintText: "Going to",
-            onTap: onSelectedArrival,
+            onTap: () => onSelectLocation(false),
           ),
           BlaDivider(),
 
