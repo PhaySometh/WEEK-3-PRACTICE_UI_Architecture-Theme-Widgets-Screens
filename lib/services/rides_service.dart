@@ -21,9 +21,17 @@ class RidesService {
         .toList();
   }
 
-  static List<Ride> filterBy({Location? departure, int? seatRequested}) {
+  static List<Ride> filterBy({
+    Location? departure,
+    Location? arrival,
+    int? seatRequested,
+  }) {
     return allRides.where((ride) {
       if (departure != null && ride.departureLocation != departure) {
+        return false;
+      }
+
+      if (arrival != null && ride.arrivalLocation != arrival) {
         return false;
       }
 

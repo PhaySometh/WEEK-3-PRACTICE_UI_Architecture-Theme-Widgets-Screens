@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:week_3_blabla_project/ui/screens/location_picker/location_picker_screen.dart';
 import 'package:week_3_blabla_project/ui/screens/ride_pref/widgets/bla_button.dart';
 import 'package:week_3_blabla_project/ui/screens/ride_pref/widgets/form_tile.dart';
+import 'package:week_3_blabla_project/ui/screens/rides/rides_screen.dart';
 import 'package:week_3_blabla_project/ui/widgets/display/bla_divider.dart';
 import 'package:week_3_blabla_project/ui/theme/theme.dart';
 import 'package:week_3_blabla_project/utils/animations_util.dart';
@@ -86,6 +87,16 @@ class _RidePrefFormState extends State<RidePrefForm> {
         departureDate: departureDate,
         requestedSeats: requestedSeats,
       );
+      
+      // Navigate to RidesScreen with the ride preferences
+      Navigator.push(
+        context,
+        AnimationUtils.createBottomToTopRoute(
+          RidesScreen(ridePref: ridePref),
+        ),
+      );
+      
+      // Call the callback if provided
       if (widget.onSearchPressed != null) {
         widget.onSearchPressed!(ridePref);
       }
